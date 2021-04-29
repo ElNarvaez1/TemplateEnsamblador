@@ -1,20 +1,3 @@
-;---Metdos de impresion---------------------------------------------------------
-
-;---Imprimir algo
-imprTexto MACRO texto
-        ;Desplegamos el texto del parametro texto
-        MOV AH, 09H
-        LEA DX,texto
-        INT 21H 
-ENDM
-
-;--- Imprimir un caracyter en pantalla
-imprChar MACRO char
-        MOV AH, 2  ;Funcion del DOS para imprimir un caracter
-        MOV DL, char  ;Imprimir el primer digito
-        INT 21h
-ENDM
-
 ;---Lectura de datos por consola/pantalla -----------------------------------------------------
 
 ;---Leer una cadena de texto de longitud variable

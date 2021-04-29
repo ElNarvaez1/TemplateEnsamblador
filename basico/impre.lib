@@ -1,0 +1,29 @@
+;---Metdos de impresion---------------------------------------------------------
+
+;---Imprimir algo
+
+imprTexto MACRO texto
+        ;Desplegamos el texto del parametro texto
+        MOV AH, 09H
+        LEA DX,texto
+        INT 21H 
+ENDM
+
+;--- Imprimir un caracyter en pantalla (letras)
+;---Puede imprimi numero pero simepre y cuando sean leidos por teclado
+
+imprChar MACRO char
+        MOV AH, 2  ;Funcion del DOS para imprimir un caracter
+        MOV DL, char  ;Imprimir el primer digito
+        INT 21h
+ENDM
+
+;-----Imprimir un digito (numero)
+;---Cuando la variable ya tiene el numero asignado desde el principio
+
+imprNumero MACRO num
+    MOV DL,num
+    ADD DL,30H
+    MOV AH,02
+    INT 21H
+ENDM
