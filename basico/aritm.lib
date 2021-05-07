@@ -15,16 +15,17 @@ sumDir MACRO num1,num2,result
 
 ENDM
 
-;---Suma indirecta, 
-;--Esta suma se usa cuando los numeros son leidos por teclado
 
+COMMENT }
+        SUMA INDIRECTA 
+        Esta suma se usa cuando los numeros son leidos por teclado.
+}
 sumInd MACRO num1,num2,result
         
         ;Realizamos el ajuste a num1
         MOV AL,num1
         SUB AL,30H
         MOV num1,AL
-
 
         ;Realizamos el ajuste al numeero DOS
         MOV AL,num2
@@ -40,4 +41,19 @@ sumInd MACRO num1,num2,result
         MOV result,AL
 
 ENDM
+
+
+
+COMMENT }
+        SUMA CON UNA MACROFUNCION
+}
+sumaMacro MACRO numero1,numero2
+        ;Sumamos el primero numero
+        
+        MOV AL,numero1
+        ADD AL,numero2
+
+        EXITM AL
+ENDM
+
 

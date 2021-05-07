@@ -1,8 +1,15 @@
 TITLE Alexis Narvaez
 .286
+
+COMMENT }
+ un comentario nuevo
+}
+
+include basico/mouse.lib
 include basico/impre.lib
 include basico/aritm.lib
 include basico/macros.lib
+
 ;========================================================================
 ; DECLARACION DEL SEGMENTO DE PILA
 ;========================================================================
@@ -15,10 +22,10 @@ pila ENDS ; Fin del segmento de pila
 ;========================================================================
 ; DECLARACION DEL SEGMENTO DE DATOS
 datos SEGMENT ; Inicio del segmento de datos
-        DATO1 DB 'A','$'
-        num1 DB ?
-        num2 DB ?
-        result DB 0 
+        DATO1 DB 'texto comprobacion','$'
+        tipo DB 1
+        num2 DB 10
+        result DB ? 
 datos ENDS ; Fin del segmento de datos
  
 ;========================================================================
@@ -37,18 +44,11 @@ CODIGO SEGMENT ; Inicio del segmento de código
         MOV AX,datos
         MOV DS,AX
 ;----Codigo
+
+        ;posPantalla 10,2
+        ;impr tipo,DATO1
     
-        ;imprChar DATO1 ;Primero prueba de llamada de macros
 
-        leerChar num1
-        INT 21H
-
-        leerChar num2
-        INT 21H
-
-        sumInd num1,num2,result
-
-        imprChar result
 
         ;INT 21H ; Llamar a la interrupción del DOS
 ;------------------------------------------------------------

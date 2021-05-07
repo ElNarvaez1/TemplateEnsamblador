@@ -16,7 +16,7 @@ leerChar MACRO char
         MOV char,AL
         ;MOV DX, OFFSET char ; Obtiene la Direccion de "VAR"
         ;MOV AH, 3FH        ; Funcion (Read from File or Device, Using a Handle)
-        ;INT 21H            ; Ejecutar
+        INT 21H            ; Ejecutar
 ENDM
 
 ;----Metdos de mouse--------------------------------------------------------------------

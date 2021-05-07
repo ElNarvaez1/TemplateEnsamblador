@@ -1,29 +1,79 @@
 ;---Metdos de impresion---------------------------------------------------------
 
-;---Imprimir algo
 
-imprTexto MACRO texto
-        ;Desplegamos el texto del parametro texto
-        MOV AH, 09H
-        LEA DX,texto
-        INT 21H 
+impr MACRO tipo,valor
+        CMP tipo,1
+                JE texto
+        CMP tipo,2
+                JE ingTeclado
+        CMP tipo,3
+                JE variables
+        CMP tipo,4
+                JE variableCaract
+        texto:;{
+           MOV AH, 09H
+           LEA DX, valor
+           INT 21H 
+
+           JMP fin
+        ;}
+        ingTeclado:;{
+           MOV AH, 2  ;Funcion del DOS para imprimir un caracter
+           MOV DL, valor  ;Imprimir el primer digito
+           INT 21h 
+
+           JMP fin
+        ;}
+        variables:;{
+           MOV DL,valor
+           ADD DL,30H
+           MOV AH,02
+           INT 21H
+
+           JMP fin
+        ;}
+        variableCaract:;{
+        
+        
+        ;}
+        fin:
 ENDM
 
-;--- Imprimir un caracyter en pantalla (letras)
-;---Puede imprimi numero pero simepre y cuando sean leidos por teclado
 
-imprChar MACRO char
-        MOV AH, 2  ;Funcion del DOS para imprimir un caracter
-        MOV DL, char  ;Imprimir el primer digito
-        INT 21h
+imprPantalla MACRO tipo,col,fila,valor
+        posPantalla col,fila
+        impr tipo,valor
 ENDM
 
-;-----Imprimir un digito (numero)
-;---Cuando la variable ya tiene el numero asignado desde el principio
 
-imprNumero MACRO num
-    MOV DL,num
-    ADD DL,30H
-    MOV AH,02
-    INT 21H
-ENDM
+
+COMMENT &
+        ;---Imprimir algo
+        imprTexto MACRO texto
+                ;Desplegamos el texto del parametro texto
+                MOV AH, 09H
+                LEA DX,texto
+                INT 21H 
+        ENDM
+&
+
+COMMENT &
+        ;--- Imprimir un caracyter en pantalla (letras)
+        ;---Puede imprimi numero pero simepre y cuando sean leidos por teclado
+        imprChar MACRO char
+                MOV AH, 2  ;Funcion del DOS para imprimir un caracter
+                MOV DL, char  ;Imprimir el primer digito
+                INT 21h
+        ENDM
+&
+COMMENT &
+        ;-----Imprimir un digito (numero)
+        ;---Cuando la variable ya tiene el numero asignado desde el principio
+
+        imprNumero MACRO num
+        MOV DL,num
+        ADD DL,30H
+        MOV AH,02
+        INT 21H
+        ENDM
+&
