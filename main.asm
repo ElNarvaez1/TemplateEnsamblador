@@ -8,7 +8,7 @@ COMMENT }
 include basico/mouse.lib
 include basico/impre.lib
 include basico/aritm.lib
-include basico/macros.lib
+include basico/lect.lib
 
 ;========================================================================
 ; DECLARACION DEL SEGMENTO DE PILA
@@ -23,8 +23,8 @@ pila ENDS ; Fin del segmento de pila
 ; DECLARACION DEL SEGMENTO DE DATOS
 datos SEGMENT ; Inicio del segmento de datos
         DATO1 DB 'texto comprobacion','$'
-        tipo DB 1
-        num2 DB 10
+        num1 DB 9
+        num2 DB 5
         result DB ? 
 datos ENDS ; Fin del segmento de datos
  
@@ -46,9 +46,12 @@ CODIGO SEGMENT ; Inicio del segmento de código
 ;----Codigo
 
         ;posPantalla 10,2
-        ;impr tipo,DATO1
-    
+        ;impr 1,DATO1
+        ;leerChar num1 
+        ;leerChar num2 
 
+        resta 3,num1,num2,result
+        impr 3,result
 
         ;INT 21H ; Llamar a la interrupción del DOS
 ;------------------------------------------------------------

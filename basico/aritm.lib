@@ -1,59 +1,138 @@
 ;----Operaciones aritmeticas------------------------------------------------------------------------------------
 
-;---Suma directa, 
-;--Esta suma se usa cuando los numeros ya estan asignados 
-;--a las variables
+;--------------------Sumas----------------------------
 
-sumDir MACRO num1,num2,result
-        ;Sumamos el primero numero
-        
-        MOV AL,num1
-        ADD AL,num2
-        ;ADD AL,30H
+COMMENT &
+   2 - Suma indirecta, los numero son leidos por teclado     
+   3 - Suma directa cuando los numero ya estan declarado en las variables.     
+&
+suma MACRO tipo,var1,var2,resultado
+        MOV AL,tipo
+        CMP AL,2
+                JE numTeclado
+        CMP AL,3
+                JE numVariables
+        JMP finSuma
+        numTeclado:;{
+                ;Realizamos el ajuste a var1
+                MOV AL,var1
+                SUB AL,30H
+                MOV var1,AL
 
-        MOV result,AL
+                ;Realizamos el ajuste al numeero DOS
+                MOV AL,var2
+                SUB AL,30H
+                MOV var2,AL
 
+                ;Sumamos los numeros
+                MOV AL,var2
+                ADD AL,var1
+
+                ADD AL,30H
+
+                MOV result,AL
+
+                JMP finSuma  
+        ;}
+        numVariables:;{
+                ;Sumamos el primero numero
+                
+                MOV AL,num1
+                ADD AL,num2
+                ;ADD AL,30H
+
+                MOV result,AL
+                JMP finSuma
+        ;}
+        finSuma:                         
 ENDM
 
 
-COMMENT }
-        SUMA INDIRECTA 
-        Esta suma se usa cuando los numeros son leidos por teclado.
-}
-sumInd MACRO num1,num2,result
-        
-        ;Realizamos el ajuste a num1
-        MOV AL,num1
-        SUB AL,30H
-        MOV num1,AL
+;--------------------RESTAS----------------------------
 
-        ;Realizamos el ajuste al numeero DOS
-        MOV AL,num2
-        SUB AL,30H
-        MOV num2,AL
+COMMENT &
+   2 - Resta indirecta, los numero son leidos por teclado     
+   3 - Resta directa cuando los numero ya estan declarado en las variables.     
+&
+resta MACRO tipo,var1,var2,resultado
+        MOV AL,tipo
+        CMP AL,2
+                JE restaIndirecta
+        CMP AL,3
+                JE restaDirecta
+        JMP finResta                
+        restaIndirecta:;{
+                ;Realizamos el ajuste a var1
+                MOV AL,var1
+                SUB AL,30H
+                MOV var1,AL
 
-        ;Sumamos los numeros
-        MOV AL,num2
-        ADD AL,num1
+                ;Realizamos el ajuste a var2
+                MOV AL,var2
+                SUB AL,30H
+                MOV var2,AL
 
-        ADD AL,30H
+                ;Restamos
+                MOV AL,var1
+                SUB AL,var2
 
-        MOV result,AL
+                ADD AL,30H
+                MOV resultado,AL
+        ;}
+        restaDirecta:;{
+                MOV AL,var1
+                SUB AL,var2
 
+                MOV resultado,AL
+        ;}
+
+        finResta:
 ENDM
 
 
 
-COMMENT }
-        SUMA CON UNA MACROFUNCION
-}
-sumaMacro MACRO numero1,numero2
-        ;Sumamos el primero numero
-        
-        MOV AL,numero1
-        ADD AL,numero2
-
-        EXITM AL
-ENDM
 
 
+;------------------------COMENTARIOS-----------------------------------------------------------------
+COMMENT &
+        ;---Suma directa, 
+        ;--Esta suma se usa cuando los numeros ya estan asignados 
+        ;--a las variables
+        sumDir MACRO num1,num2,result
+                ;Sumamos el primero numero
+                
+                MOV AL,num1
+                ADD AL,num2
+                ;ADD AL,30H
+
+                MOV result,AL
+
+        ENDM
+&
+
+COMMENT &
+                COMMENT }
+                SUMA INDIRECTA 
+                Esta suma se usa cuando los numeros son leidos por teclado.
+        }
+        sumInd MACRO num1,num2,result
+                
+                ;Realizamos el ajuste a num1
+                MOV AL,num1
+                SUB AL,30H
+                MOV num1,AL
+
+                ;Realizamos el ajuste al numeero DOS
+                MOV AL,num2
+                SUB AL,30H
+                MOV num2,AL
+
+                ;Sumamos los numeros
+                MOV AL,num2
+                ADD AL,num1
+
+                ADD AL,30H
+
+                MOV result,AL
+        ENDM
+&

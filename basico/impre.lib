@@ -2,14 +2,16 @@
 
 
 impr MACRO tipo,valor
-        CMP tipo,1
+        MOV AL,tipo
+        CMP AL,1
                 JE texto
-        CMP tipo,2
+        CMP AL,2
                 JE ingTeclado
-        CMP tipo,3
+        CMP AL,3
                 JE variables
-        CMP tipo,4
+        CMP AL,4
                 JE variableCaract
+        JMP fin        
         texto:;{
            MOV AH, 09H
            LEA DX, valor
@@ -46,7 +48,7 @@ imprPantalla MACRO tipo,col,fila,valor
 ENDM
 
 
-
+;----------------COMENTARIOS----------------------------------------------------------------------------
 COMMENT &
         ;---Imprimir algo
         imprTexto MACRO texto

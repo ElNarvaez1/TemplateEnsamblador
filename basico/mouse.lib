@@ -1,3 +1,5 @@
+;----------Posicionamiento en pantalla------------------------------------------------------------
+
 posPantalla MACRO fila,columna
         mov ah,02h
         mov bh,00
@@ -5,3 +7,65 @@ posPantalla MACRO fila,columna
         mov dl,columna
         int 10h
 ENDM
+
+;------------Raton en pantalla---------------------------------------------------------------
+
+COMMENT &
+        Iniciar el mouse en pantalla
+        Habilida la movilidad dle mouse en pantalla
+&
+inicMouse MACRO
+        mov ax,00
+        int 33h 
+ENDM
+
+
+COMMENT &
+        Mostrar mouse en pantalla
+&
+mostMouse MACRO
+        mov ax,01h
+        int 33h
+ENDM
+
+
+;---Ocultar el mouse
+oculMouse MACRO 
+        mov ax,02h
+        int 33h
+ENDM
+
+
+;----------------Eventos del mouse-------------------------------------------------------------
+;---Caotura de coordenadas del click en pantalla
+clickPantalla MACRO filaEvento,columnaEvento 
+        mov ax, dx
+        mov bl,8
+        div bl
+        mov filaEvento,al
+
+        mov ax, cx
+        mov bl,8
+        div bl
+        mov columnaEvento,al
+            
+        mov ax,03h
+        int 33h 
+ ENDM
+
+
+
+;-------------------COMENTARIOS---------------------------------------------------------------
+COMMENT &
+        ;---Posicion del prom de la pantalla 
+        ;---Coordenadas donde iniciara la escritura de una palabra
+        posProm MACRO fila,columna
+                mov ah,02h
+                mov bh,00
+                mov dh,fila
+                mov dl,columna
+                int 10h
+        ENDM
+&
+
+

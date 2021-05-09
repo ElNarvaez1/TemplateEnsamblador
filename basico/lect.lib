@@ -25,53 +25,8 @@ ENDM
 ;---Limpia la consola de ensamblador
 limpConsola MACRO 
         mov ax,0600h
-        mov bh,00Ah ;Color de las letras y  el fonod
+        mov bh,00dh ;Color de las letras y  el fonod
         mov cx,0000h
         mov dx,184Fh
         int 10h
-ENDM
-
-;---Posicion del prom de la pantalla 
-;---Coordenadas donde iniciara la escritura de una palabra
-posProm MACRO fila,columna
-        mov ah,02h
-        mov bh,00
-        mov dh,fila
-        mov dl,columna
-        int 10h
-ENDM
-
-;---Ocultar el mouse
-oculMouse MACRO 
-        mov ax,02h
-        int 33h
-ENDM
-
-;---Iniciar el mouse en pantalla
-;---Habilida la movilidad dle mouse en pantalla
-inicMouse MACRO
-        mov ax,00
-        int 33h 
-ENDM
-
-;---Caotura de coordenadas del click en pantalla
-clickPantalla MACRO filaEvento,columnaEvento 
-         mov ax, dx
-        mov bl,8
-        div bl
-        mov filaEvento,al
-
-        mov ax, cx
-        mov bl,8
-        div bl
-        mov columnaEvento,al
-            
-        mov ax,03h
-        int 33h 
- ENDM
-
-; ---- Mostrar mouse en pantalla
-mostMouse MACRO
-        mov ax,01h
-        int 33h
 ENDM
