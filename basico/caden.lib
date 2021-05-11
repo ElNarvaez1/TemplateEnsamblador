@@ -1,0 +1,57 @@
+;Métodos de comparacion de cadenas.
+
+COMMENT &
+    Las instrucciones CMPSB, CMPSW y CMPSD comparan un operando de memoria al que apunta ESI, 
+    con un operando de memoria al que apunta EDI:
+
+
+    CMPSB => Compara bytes (Pag 304)
+    CLD   => Borra la bandera Dirección, asignándole un cero. Las instrucciones de 
+             primitivas de cadena incrementan (E)SI y (E)DI de manera automática.(Pag 656)
+
+    MOV CX,LENGTHOF cadena => El prefijo REPE repite la comparación e incrementa a 
+                              ESI y EDI de manera automática hasta que ECX sea igual 
+                              a cero, o hasta que un par de dobles palabras sea distinto.(Pag 305)
+
+    MOV ESI,OFFSET origen  => Es equivalente a LEA SI,origen
+
+    MOV EDI,OFFSET destino => Es equivalente a LEA DI,origen
+
+            DI             => (índice de destino) almacena el desplazamiento del operando de 
+                                destino en memoria en algunos tipos de operaciones.
+
+            SI             => (índice de origen) almacena el desplazamiento del operando de 
+                                origen en memoria en algunos tipos de operaciones.
+
+            OFFSET         => El operador OFFSET devuelve el desplazamiento de una etiqueta 
+                              de datos. El desplazamiento representa la distancia (en bytes) 
+                              de la etiqueta, a partir del inicio del segmento de datos.  
+            REPE           => El prefijo REPE hace que CMPSB continúe incrementando a 
+                              ESI y EDI, y que compare los caracteres uno a uno hasta 
+                              encontrar una diferencia entre las dos cadenas:                                                   
+&
+
+compararCad MACRO origen, destino, resultado
+    CLD
+    MOV ES,AX
+    MOV SI,OFFSET origen
+    MOV DI,OFFSET destino
+    MOV CX, LENGTHOF origen
+    REPE CMPSB
+
+    JE cadenasIgua
+    JNE cadenasDifer
+
+    cadenasIgua:
+        MOV resultado,1
+        JMP finComparar
+    
+    cadenasDifer:
+        MOV resultado,0
+        JMP finComparar    
+
+     finComparar:       
+ENDM 
+
+
+

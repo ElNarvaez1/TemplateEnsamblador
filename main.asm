@@ -9,6 +9,7 @@ include basico/mouse.lib
 include basico/impre.lib
 include basico/aritm.lib
 include basico/lect.lib
+include basico/caden.lib
 
 ;========================================================================
 ; DECLARACION DEL SEGMENTO DE PILA
@@ -23,7 +24,8 @@ pila ENDS ; Fin del segmento de pila
 ; DECLARACION DEL SEGMENTO DE DATOS
 datos SEGMENT ; Inicio del segmento de datos
         DATO1 DB 'texto comprobacion','$'
-        num1 DB 9
+        cadena1 DB 'alexis','$'
+        cadena2 DB 'ale','$'
         num2 DB 5
         result DB ? 
 datos ENDS ; Fin del segmento de datos
@@ -45,12 +47,7 @@ CODIGO SEGMENT ; Inicio del segmento de código
         MOV DS,AX
 ;----Codigo
 
-        ;posPantalla 10,2
-        ;impr 1,DATO1
-        ;leerChar num1 
-        ;leerChar num2 
-
-        resta 3,num1,num2,result
+        compararCad cadena1,cadena2,result
         impr 3,result
 
         ;INT 21H ; Llamar a la interrupción del DOS
