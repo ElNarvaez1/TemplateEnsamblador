@@ -47,8 +47,7 @@ CODIGO SEGMENT ; Inicio del segmento de código
         MOV DS,AX
 ;----Codigo
 
-        compararCad cadena1,cadena2,result
-        impr 3,result
+
 
         ;INT 21H ; Llamar a la interrupción del DOS
 ;------------------------------------------------------------

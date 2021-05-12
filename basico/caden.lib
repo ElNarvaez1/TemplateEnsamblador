@@ -53,5 +53,46 @@ compararCad MACRO origen, destino, resultado
      finComparar:       
 ENDM 
 
+COMMENT &
+    Las instrucciones SCASB, SCASW y SCASD comparan un valor en AL/AX/EAX 
+    con un byte, palabra o doble palabra, respectivamente, la cual está 
+    direccionada por EDI. Las instrucciones son útiles cuando se busca un 
+    valor individual en una cadena o arreglo.
+
+    CLD   => Borra la bandera Dirección, asignándole un cero. Las instrucciones de 
+             primitivas de cadena incrementan (E)SI y (E)DI de manera automática.(Pag 656).
+
+    MOV EDI,OFFSET destino => Es equivalente a LEA DI,origen
+
+            DI             => (índice de destino) almacena el desplazamiento del operando de 
+                                destino en memoria en algunos tipos de operaciones.
+
+
+&
+compararCar MACRO cadena, caracter, posicion
+    CLD 
+    MOV AX,DS
+    MOV ES,AX
+	MOV DI, OFFSET cadena
+	MOV AL, caracter
+	MOV CX, LENGTHOF cadena
+           
+    MOV posicion,1 
+
+    inicioCiclo:
+		SCASB 
+		JE encontradoScan ;;SI ENCUENTRA EL CARACTER EN LA CADENA
+        INC posicion
+    LOOP inicioCiclo ;;SI NO  ENCUENTRA EL CARACTER EN LA CADENA SIGUE CON EL CICLO Y DA EL SALTO A NOENCONTRADO
+	JMP noEncontradoScan ;;    
+
+    encontradoScan:
+        JMP finScan
+    noEncontradoScan:
+        MOV posicion,0
+        JMP finScan    
+
+    finScan:
+ENDM
 
 
