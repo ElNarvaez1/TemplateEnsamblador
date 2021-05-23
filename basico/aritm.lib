@@ -6,94 +6,153 @@ COMMENT &
    2 - Suma indirecta, los numero son leidos por teclado     
    3 - Suma directa cuando los numero ya estan declarado en las variables.     
 &
-suma MACRO tipo,var1,var2,resultado
-        MOV AL,tipo
-        CMP AL,2
-                JE numTeclado
-        CMP AL,3
-                JE numVariables
-        JMP finSuma
-        numTeclado:;{
-                ;Realizamos el ajuste a var1
-                MOV AL,var1
-                SUB AL,30H
-                MOV var1,AL
+suma2 MACRO var1,var2,resultado
+        ;Realizamos el ajuste a var1
+        MOV AL,var1
+        SUB AL,30H
+        MOV var1,AL
 
-                ;Realizamos el ajuste al numeero DOS
-                MOV AL,var2
-                SUB AL,30H
-                MOV var2,AL
+        ;Realizamos el ajuste al numeero DOS
+        MOV AL,var2
+        SUB AL,30H
+        MOV var2,AL
 
-                ;Sumamos los numeros
-                MOV AL,var2
-                ADD AL,var1
+        ;Sumamos los numeros
+        MOV AL,var2
+        ADD AL,var1
 
-                ADD AL,30H
+        ADD AL,30H
 
-                MOV result,AL
+        MOV result,AL
 
-                JMP finSuma  
-        ;}
-        numVariables:;{
-                ;Sumamos el primero numero
+ENDM 
+
+suma3 MACRO var1,var2,resultado
+        ;Sumamos el primero numero
                 
-                MOV AL,num1
-                ADD AL,num2
-                ;ADD AL,30H
+        MOV AL,num1
+        ADD AL,num2
+        ;ADD AL,30H
 
-                MOV result,AL
-                JMP finSuma
-        ;}
-        finSuma:                         
+        MOV result,AL
+
 ENDM
 
+ 
 
 ;--------------------RESTAS----------------------------
-
 COMMENT &
    2 - Resta indirecta, los numero son leidos por teclado     
    3 - Resta directa cuando los numero ya estan declarado en las variables.     
 &
-resta MACRO tipo,var1,var2,resultado
-        MOV AL,tipo
-        CMP AL,2
-                JE restaIndirecta
-        CMP AL,3
-                JE restaDirecta
-        JMP finResta                
-        restaIndirecta:;{
-                ;Realizamos el ajuste a var1
-                MOV AL,var1
-                SUB AL,30H
-                MOV var1,AL
+resta2 MACRO var1,var2,resultado
+        MOV AL,var1
+        SUB AL,30H
+        MOV var1,AL
 
-                ;Realizamos el ajuste a var2
-                MOV AL,var2
-                SUB AL,30H
-                MOV var2,AL
+        ;Realizamos el ajuste a var2
+        MOV AL,var2
+        SUB AL,30H
+        MOV var2,AL
 
-                ;Restamos
-                MOV AL,var1
-                SUB AL,var2
+        ;Restamos
+        MOV AL,var1
+        SUB AL,var2
 
-                ADD AL,30H
-                MOV resultado,AL
-        ;}
-        restaDirecta:;{
-                MOV AL,var1
-                SUB AL,var2
+        ADD AL,30H
+        MOV resultado,AL
 
-                MOV resultado,AL
-        ;}
+ENDM
 
-        finResta:
+resta3 MACRO var1,var2,resultado
+        MOV AL,var1
+        SUB AL,var2
+
+        MOV resultado,AL
 ENDM
 
 
-
-
-
 ;------------------------COMENTARIOS-----------------------------------------------------------------
+COMMENT &
+        resta MACRO tipo,var1,var2,resultado
+                MOV AL,tipo
+                CMP AL,2
+                        JE restaIndirecta
+                CMP AL,3
+                        JE restaDirecta
+                JMP finResta                
+                restaIndirecta:;{
+                        ;Realizamos el ajuste a var1
+                        MOV AL,var1
+                        SUB AL,30H
+                        MOV var1,AL
+
+                        ;Realizamos el ajuste a var2
+                        MOV AL,var2
+                        SUB AL,30H
+                        MOV var2,AL
+
+                        ;Restamos
+                        MOV AL,var1
+                        SUB AL,var2
+
+                        ADD AL,30H
+                        MOV resultado,AL
+                ;}
+                restaDirecta:;{
+                        MOV AL,var1
+                        SUB AL,var2
+
+                        MOV resultado,AL
+                ;}
+
+                finResta:
+        ENDM
+& 
+
+COMMENT &
+        suma MACRO tipo,var1,var2,resultado
+                MOV AL,tipo
+                CMP AL,2
+                        JE numTeclado
+                CMP AL,3
+                        JE numVariables
+                JMP finSuma
+                numTeclado:;{
+                        ;Realizamos el ajuste a var1
+                        MOV AL,var1
+                        SUB AL,30H
+                        MOV var1,AL
+
+                        ;Realizamos el ajuste al numeero DOS
+                        MOV AL,var2
+                        SUB AL,30H
+                        MOV var2,AL
+
+                        ;Sumamos los numeros
+                        MOV AL,var2
+                        ADD AL,var1
+
+                        ADD AL,30H
+
+                        MOV result,AL
+
+                        JMP finSuma  
+                ;}
+                numVariables:;{
+                        ;Sumamos el primero numero
+                        
+                        MOV AL,num1
+                        ADD AL,num2
+                        ;ADD AL,30H
+
+                        MOV result,AL
+                        JMP finSuma
+                ;}
+                finSuma:                         
+        ENDM
+&
+
 COMMENT &
         ;---Suma directa, 
         ;--Esta suma se usa cuando los numeros ya estan asignados 
