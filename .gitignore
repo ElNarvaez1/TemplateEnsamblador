@@ -2,4 +2,5 @@
 *.exe
 *.o
 *.obj
+*.map
 *.bc
