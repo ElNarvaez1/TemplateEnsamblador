@@ -1,46 +1,26 @@
 ;---Metdos de impresion---------------------------------------------------------
 
+impr1 MACRO valor
+        MOV AH, 09H
+        LEA DX, valor
+        INT 21H 
 
-impr MACRO tipo,valor
-        MOV AL,tipo
-        CMP AL,1
-                JE texto
-        CMP AL,2
-                JE ingTeclado
-        CMP AL,3
-                JE variables
-        CMP AL,4
-                JE variableCaract
-        JMP fin        
-        texto:;{
-           MOV AH, 09H
-           LEA DX, valor
-           INT 21H 
-
-           JMP fin
-        ;}
-        ingTeclado:;{
-           MOV AH, 2  ;Funcion del DOS para imprimir un caracter
-           MOV DL, valor  ;Imprimir el primer digito
-           INT 21h 
-
-           JMP fin
-        ;}
-        variables:;{
-           MOV DL,valor
-           ADD DL,30H
-           MOV AH,02
-           INT 21H
-
-           JMP fin
-        ;}
-        variableCaract:;{
-        
-        
-        ;}
-        fin:
 ENDM
 
+impr2 MACRO valor
+        MOV AH, 2  ;Funcion del DOS para imprimir un caracter
+        MOV DL, valor  ;Imprimir el primer digito
+        INT 21h 
+
+ENDM
+
+impr3 MACRO valor
+        MOV DL,valor
+        ADD DL,30H
+        MOV AH,02
+        INT 21H
+
+ENDM
 
 imprPantalla MACRO tipo,col,fila,valor
         posPantalla col,fila
@@ -49,6 +29,51 @@ ENDM
 
 
 ;----------------COMENTARIOS----------------------------------------------------------------------------
+COMMENT &
+        impr MACRO tipo,valor
+                MOV AL,tipo
+                CMP AL,1
+                        JE texto
+                CMP AL,2
+                        JE ingTeclado
+                CMP AL,3
+                        JE variables
+                CMP AL,4
+                        JE variableCaract
+                JMP fin        
+                texto:;{
+                MOV AH, 09H
+                LEA DX, valor
+                INT 21H 
+
+                JMP fin
+                ;}
+                ingTeclado:;{
+                MOV AH, 2  ;Funcion del DOS para imprimir un caracter
+                MOV DL, valor  ;Imprimir el primer digito
+                INT 21h 
+
+                JMP fin
+                ;}
+                variables:;{
+                MOV DL,valor
+                ADD DL,30H
+                MOV AH,02
+                INT 21H
+
+                JMP fin
+                ;}
+                variableCaract:;{
+                
+                
+                ;}
+                fin:
+        ENDM
+&
+
+
+
+
 COMMENT &
         ;---Imprimir algo
         imprTexto MACRO texto
