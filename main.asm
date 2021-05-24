@@ -46,8 +46,15 @@ CODIGO SEGMENT ; Inicio del segmento de código
         MOV AX,datos
         MOV DS,AX
 ;----Codigo
+        limpConsola
+        posPantalla 0,0
 
-
+        impr1 DATO1
+        posPantalla 1,0
+        impr1 DATO1
+        posPantalla 2,0
+        impr1 DATO1
+        posPantalla 3,0
 
         ;INT 21H ; Llamar a la interrupción del DOS
 ;------------------------------------------------------------
